@@ -1,6 +1,5 @@
 language: node_js
-node_js: 8.8.0
-npm: 5.5.1
+node_js: stable
 
 # S: Build Lifecycle
 install:
