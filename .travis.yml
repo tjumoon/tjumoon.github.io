@@ -12,15 +12,16 @@ before_script:
 script:
   - hexo clean
   - hexo g
+  - hexo d
 
 after_script:
-  - cd ./public
-  - git init
-  - git config user.name "tjumoon"
-  - git config user.email "simon_yang@aliyun.com"
-  - git add .
-  - git commit -m "Update docs"
-  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
+  # - cd ./public
+  # - git init
+  # - git config user.name "tjumoon"
+  # - git config user.email "simon_yang@aliyun.com"
+  # - git add .
+  # - git commit -m "Update docs"
+  # - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
 # E: Build LifeCycle
 
 branches:
