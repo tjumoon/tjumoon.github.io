@@ -22,7 +22,7 @@ Rx系列的核心就是Observable Sequence这个相信大家心中已经有所�
 
 释放某一个监听的时候我们可以手动调用释放方法，但是这个貌似一般不常用：
 
-```
+```swift
 // 关于scheduler，我们会在下面讲到
 let subscription = Observable<Int>.interval(0.3, scheduler: SerialDispatchQueueScheduler.init(internalSerialQueueName: "test"))
     .observeOn(MainScheduler.instance)	//observeOn也会在下面讲到
@@ -35,7 +35,7 @@ Thread.sleep(forTimeInterval: 2.0)
 subscription.dispose()
 ```
 
-```
+```swift
 next(0)
 next(1)
 next(2)
@@ -50,7 +50,7 @@ next(5)
 
 除了上面手动的方法，还有一种是自动的方式，推荐大家使用这种方式，这种方式就好像iOS中的ARC方式似得，会自动去释放资源。
 
-```
+```swift
 let disposeBag = DisposeBag()
    
 Observable<Int>.empty()
@@ -68,7 +68,7 @@ Observable<Int>.empty()
 
 区别其实我感觉其实就一句话，subscribeOn()设置起点在哪个线程，observeOn()设置了后续工作在哪个线程。例如：
 
-```
+```swift
 someObservable 
     .doOneThing() 1
     .observeOn(MainRouteScheduler.instance) 2
@@ -91,7 +91,7 @@ someObservable
 可能你看官方demo的时候，会有迷惑，为啥很多序列后面会有shareReplay(1)呢？，想的头昏脑胀的。
 请先看下面例子：
 
-```
+```swift
 let testReplay = Observable.just("😂")
     .map {  print($0) }
     
@@ -106,7 +106,7 @@ testReplay
 }.addDisposableTo(disposeBag)
 ```
 
-```
+```swift
 😂
 next(())
 completed
@@ -117,7 +117,7 @@ completed
 
 大家发现没，map函数执行了两遍，但是有些时候我不需要map函数里的东西执行两遍，比如map函数里面如果执行的是网络请求，我只需要一次请求结果供大家使用就行了，多余的请求没啥用，浪费时间。所以这时候就需要shareReplay(1)了。这里面的数字一般都是1，只执行一次。你可以改为2，3看看结果有啥不同哦。
 
-```
+```swift
 let testReplay = Observable.just("😂")
     .map {  print($0) }
     .shareReplay(1)
@@ -133,7 +133,7 @@ testReplay
 }.addDisposableTo(disposeBag)
 ```
 
-```
+```swift
 😂 //只执行了一次
 next(())
 completed
@@ -147,7 +147,7 @@ completed
 
 例如我们自定义一个map操作符：
 
-```
+```swift
 extension ObservableType {
     func myMap<R>(transform: E -> R) -> Observable<R> {
         return Observable.create { observer in
@@ -175,7 +175,7 @@ extension ObservableType {
 
 Driver是啥东东？Driver功能很吊，讲解Driver之前我们现在看看下面的例子。
 
-```
+```swift
 let results = query.rx.text
     .throttle(0.3, scheduler: MainScheduler.instance)
     .flatMapLatest { query in
@@ -206,7 +206,7 @@ results
 
 当然针对上面问题我们也有解决方案，我们可以使用神器shareReplay(1)保证不会执行两次，可以使用observeOn()保证后面所有操作在主线程完成。
 
-```
+```swift
 let results = query.rx.text
     .throttle(0.3, scheduler: MainScheduler.instance)
     .flatMapLatest { query in
@@ -230,7 +230,7 @@ results
 
 但是你也可以使用Driver
 
-```
+```swift
 let results = query.rx.text.asDriver()	//转换成一个Driver序列
     .throttle(0.3, scheduler: MainScheduler.instance)
     .flatMapLatest { query in
@@ -262,13 +262,13 @@ drive方法只能在Driver序列中使用，Driver有以下特点：1 Driver序�
 
 map函数，接受一个R类型的序列，返回一个R类型的序列，还是原来的序列
 
-```
+```swift
 public func map<R>(_ transform: @escaping (Self.E) throws -> R) -> RxSwift.Observable<R>
 ```
 
 flatMap函数，接收一个O类型的序列，返回一个O.E类型的序列，也就是有原来序列里元素组成的新序列。
 
-```
+```swift
 public func flatMap<O : ObservableConvertibleType>(_ selector: @escaping (Self.E) throws -> O) -> RxSwift.Observable<O.E>
 ```
 
@@ -276,7 +276,7 @@ public func flatMap<O : ObservableConvertibleType>(_ selector: @escaping (Self.E
 
 看下面例子：
 
-```
+```swift
 let test = Observable.of("1", "2", "3", "4", "5")
     .map { $0 + "TTF" }
     
@@ -287,7 +287,7 @@ test
     .addDisposableTo(disposeBag)
 ```
 
-```
+```swift
 1TTF
 2TTF
 3TTF
@@ -297,7 +297,7 @@ test
 
 我们使用map对序列中每一个元素进行了处理，返回的是一个元素，而使用flatMap需要返回的序列。那么使用map也返回一个序列看看。
 
-```
+```swift
 let test = Observable.of("1", "2", "3", "4", "5")
     .map { Observable.just($0) }
 
@@ -308,7 +308,7 @@ test
     .addDisposableTo(disposeBag)
 ```
 
-```
+```swift
 RxSwift.Just<Swift.String>
 RxSwift.Just<Swift.String>
 RxSwift.Just<Swift.String>
@@ -318,7 +318,7 @@ RxSwift.Just<Swift.String>
 
 看到结果会打印出每一个序列，下面我们使用merge()方法将这几个序列进行合并
 
-```
+```swift
 let test = Observable.of("1", "2", "3", "4", "5")
     .map { Observable.just($0) }
     .merge()
@@ -330,7 +330,7 @@ test
     .addDisposableTo(disposeBag)
 ```
 
-```
+```swift
 1
 2
 3
@@ -340,7 +340,7 @@ test
 
 合并为一个新序列后我们就可以正常打印元素了。下面看看使用faltMap()函数干这件事
 
-```
+```swift
 let test = Observable.of("1", "2", "3", "4", "5")
     .flatMap { Observable.just($0) }
     
@@ -351,7 +351,7 @@ test
     .addDisposableTo(disposeBag)
 ```
 
-```
+```swift
 1
 2
 3
@@ -367,7 +367,7 @@ test
 
 flatMap函数在实际应用中有很多地方需要用到，比如网络请求，网络请求可能会发生错误，我们需要对这个请求过程进行监听，然后处理错误。只要继续他返回的是一个新的序列。
 
-```
+```swift
 validatedUsername = input.username
             .flatMapLatest { username in
                 return validationService.validateUsername(username)
@@ -379,7 +379,7 @@ validatedUsername = input.username
 
 flatMapLatest其实就是flatMap的另一个方式，只发送最后一个合进来的序列事件。上面认证username是一个网络请求，我们需要对这个过程进行处理。
 
-```
+```swift
 validatedPassword = input.password
     .map { password in
         return validationService.validatePassword(password)
@@ -391,7 +391,7 @@ validatedPassword = input.password
 
 flatMap也解决了内嵌多个subscribe的问题，官方不建议内嵌多个subscribe。比如：
 
-```
+```swift
 textField.rx_text.subscribe(onNext: { text in
     performURLRequest(text).subscribe(onNext: { result in
         ...
@@ -403,7 +403,7 @@ textField.rx_text.subscribe(onNext: { text in
 
 改写为flatMap
 
-```
+```swift
 textField.rx_text
     .flatMapLatest { text in
         return performURLRequest(text) //因为flatMap返回一个新的sequence
@@ -420,7 +420,7 @@ textField.rx_text
 
 UIBindingObserver这个东西很有用的，创建我们自己的监听者，有时候RxCocoa(RxSwiftz中对UIKit的一个扩展库)给的扩展不够我们使用，比如一个UITextField有个isEnabled属性，我想把这个isEnabled变为一个observer，我们可以这样做：
 
-```
+```swift
 extension Reactive where Base: UITextField {
     var inputEnabled: UIBindingObserver<Base, Result> {
         return UIBindingObserver(UIElement: base) { textFiled, result in
@@ -432,7 +432,7 @@ extension Reactive where Base: UITextField {
 
 UIBindingObserver是一个类，他的初始化方法中，有两个参数，第一个参数是一个元素本身，第一个参数是一个闭包，闭包参数是元素本身，还有他的一个属性。
 
-```
+```swift
 public init(UIElement: UIElementType, binding: @escaping (UIElementType, Value) -> Swift.Void)
 ```
 
