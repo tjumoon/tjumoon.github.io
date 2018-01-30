@@ -10,3 +10,6 @@ tags:
 	mongod -f /usr/local/etc/mongod.conf
 1. 启动mm-api-server
 	pm2 start process.json
+[hello][1]
+
+[1]:	http://www.baidu.com
