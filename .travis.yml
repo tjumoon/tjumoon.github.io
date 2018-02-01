@@ -10,6 +10,7 @@ before_script:
   - git config user.name "tjumoon"
   - git config user.email "simon_yang@aliyun.com"
   - sed -i "s/__GH_TOKEN__/${GH_TOKEN}/" _config.yml
+  - sed -i "s/__CODING_TOKEN__/${CODING_TOKEN}/" _config.yml
 
 script:
   - hexo clean

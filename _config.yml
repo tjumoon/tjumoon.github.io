@@ -94,5 +94,5 @@ deploy:
   - type: git
     repo: 
       github: https://__GH_TOKEN__@github.com/tjumoon/tjumoon.github.io.git,master
-      coding: git@git.coding.net:simon_yang/Blog.git,master
+      coding: https://simon_yang:__CODING_TOKEN__@git.coding.net/simon_yang/Blog.git,master
   - type: baidu_url_submitter
