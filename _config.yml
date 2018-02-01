@@ -93,6 +93,6 @@ baidu_url_submit:
 deploy:
   - type: git
     repo: 
-      github: git@github.com:tjumoon/tjumoon.github.io.git,master
+      github: https://__GH_TOKEN__@github.com/tjumoon/tjumoon.github.io.git,master
       coding: git@git.coding.net:simon_yang/Blog.git,master
   - type: baidu_url_submitter
