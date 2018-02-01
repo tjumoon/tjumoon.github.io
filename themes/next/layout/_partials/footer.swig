@@ -18,6 +18,8 @@
     <span title="{{ __('post.totalcount') }}">{#
     #}{{ totalcount(site, '0,0.0a') }}{#
   #}</span>
+  <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
+
   {% endif %}
 </div>
 
