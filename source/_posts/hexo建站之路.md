@@ -7,7 +7,7 @@ tags:
 
 ## 前因
 
-前一段时间，折腾了一下，搞了个自己的博客。基于`Hexo`，网上有一大堆教程，一步步教你怎么来搭建一个自己的博客，有需要的小伙伴可以自行百度，当然其中也遇到了一些问题。先说下我的最终方案把`Hexo + Next主题 + Travis CI自动化部署 + GitHubPages&CodingPages双托管`。
+前一段时间，折腾了一下，搞了个自己的博客。基于`Hexo`，网上有一大堆教程，一步步教你怎么来搭建一个自己的博客，有需要的小伙伴可以自行百度，当然其中也遇到了一些问题。先说下我的最终方案把`Hexo + Next主题 + Travis CI自动化部署 + GitHubPages & CodingPages双托管`。
 
 ## Travis CI自动化部署
 
@@ -18,7 +18,7 @@ tags:
 * `blog-source`——用于托管我们源代码
 * `master`——用于发布代码
 
-不清楚的同学可以自行百度如何用`Travis CI`自动化发布`Hexo`博客，往上有一些`Travis`脚本，比如：
+不清楚的同学可以自行百度如何用`Travis CI`自动化发布`Hexo`博客，网上有一些`Travis`脚本，比如：
 
 ```js
 language: node_js
@@ -117,7 +117,7 @@ after_script:
 
 网上一位大神，写了一个`Hexo`的插件`hexo-baidu-url-submit`
 
-#####安装: Hexo根目录，安装此插件
+##### 安装: Hexo根目录，安装此插件
 
 ```js
 npm install hexo-baidu-url-submit --save
@@ -142,7 +142,7 @@ root: /
 permalink: :year/:month/:day/:title/
 ```
 
-**一定要注意，你配置的域名必须与你在百度站长平台中注册的域名一致，如果有www就都要有，如果没有就都没有** 
+**一定要注意，你配置的域名必须与你在百度站长平台中注册的域名一致，如果有`www`就都要有，如果没有就都没有** 
 
 ##### 最后，加入新的deployer
 
@@ -286,7 +286,7 @@ deploy:
 
 ```
 
-其实我们，来看下`hexo deploy`做了什么，其实做了两件事
+我们来看下`hexo deploy`做了什么，其实做了两件事
 
 * 提交本地文件到`master`分支
 * 执行`baidu_url_submitter` 
