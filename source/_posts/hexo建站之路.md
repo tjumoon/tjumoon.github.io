@@ -113,17 +113,17 @@ after_script:
 
 百度有三种自动提交方式：`主动推送`, `自动推送`, `sitemap`，一个个说，每个里面都有坑
 
-#### 主动提交
+### 主动提交
 
 网上一位大神，写了一个`Hexo`的插件`hexo-baidu-url-submit`
 
-##### 安装: Hexo根目录，安装此插件
+#### 安装: Hexo根目录，安装此插件
 
 ```js
 npm install hexo-baidu-url-submit --save
 ```
 
-##### 配置: 同样在根目录下，把以下内容配置到_config.yml文件中
+#### 配置: 同样在根目录下，把以下内容配置到_config.yml文件中
 
 ```js
 baidu_url_submit:
@@ -133,7 +133,7 @@ baidu_url_submit:
   path: baidu_urls.txt ## 文本文档的地址， 新链接会保存在此文本文档里
 ```
 
-##### 域名配置：同样在_config.yml文件中
+#### 域名配置：同样在_config.yml文件中
 
 ```js
 # URL
@@ -144,7 +144,7 @@ permalink: :year/:month/:day/:title/
 
 **一定要注意，你配置的域名必须与你在百度站长平台中注册的域名一致，如果有`www`就都要有，如果没有就都没有** 
 
-##### 最后，加入新的deployer
+#### 最后，加入新的deployer
 
 ```js
 # Deployment
@@ -323,7 +323,7 @@ env:
 
 ```
 
-#### 自动提交
+### 自动提交
 
 自动提交比较简单，在`next`主题配置`_config.yml`中设置
 
@@ -354,7 +354,7 @@ baidu_push: true
 
 这里添加了一段发送的`js`代码，一定要注意**你配置的域名必须要与你百度站长在的域名一致**
 
-#### sitemap
+### sitemap
 
 百度站长平台，提交`sitemap`后，百度会自动去爬取你的`sitemap`
 
